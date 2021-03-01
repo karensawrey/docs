@@ -1,0 +1,56 @@
+# Mattermost
+
+
+If you're using open-source [Mattermost messenger](https://mattermost.com/) you can receive notifications about your builds in your Mattermost workspace. The process of setting up the Buildkite integration with Mattermost is very similar to setting up the [integration with Slack](/docs/integrations/slack) messenger.  
+
+{:toc}
+
+Configuring a Mattermost notification service will authorize access for your desired channel. By default, notifications will be sent to all configured Mattermost channels.
+
+Setting up a Notification Service requires Buildkite organization admin access. 
+
+## Adding a notification service  
+
+In your [Organization’s Notification Settings](https://buildkite.com/organizations/-/services), add a Slack notification service.
+
+<%= image "buildkite-add-slack.png", width: 1458/2, height: 208/2, alt: "Screenshot of the 'Add' button for adding a Slack service to Buildkite" %>
+
+Click the "Add to Slack" button:
+
+<%= image "buildkite-add-to-slack.png", width: 1458/2, height: 358/2, alt: "Screenshot of 'Add Slack Service' screen on Buildkite. It shows an 'Add to Slack' button, as well as the option to switch to a custom Webhook URL." %>
+
+Select to manually specify a Webhook URL.
+<image1>
+
+Specify the following information: 
+1. Description of your Mattermost notification
+1. Your Mattermost webhook URL
+1. Message theme (text or emoji)
+1. Pipelines (all or only some)  
+1. Branches that will trigger a notification
+1. Build state filtering (by default - 'Only send notifications for failed and fixed builds')
+
+
+<image2>
+
+If you're using the [`notify` YAML attribute](/docs/pipelines/notifications) for more fine-grained control over your Mattermost notifications, select the 'Only Some Pipelines...' option. Once you're using a Slack `notify` attribute in your `pipeline.yml`, the branch and build filtering from the Mattermost Notification Service will be overridden by the YAML options you choose.
+
+```
+notify:
+- slack: "#ci"
+```  
+
+## Changing channels
+
+Once created, the channel and workspace in Mattermost cannot be changed. To post to a different channel or workspace, create a new notification service.
+
+## Conditional notifications
+
+By default, notifications are sent to all configured Mattermost channels. For more control over when each channel receives notifications, use the [`notify` YAML attribute](/docs/pipelines/notifications) in your `pipeline.yml` file.
+
+See the [Slack Channel Message](/docs/pipelines/notifications) section of the Notifications guide for further information.
+
+
+## Create a new Mattermost notification service
+
+Using the instructions above, [add a new Mattermost notification service](/docs/integrations/mattermost#adding-a-notification-service) with the same settings as the existing integration.
